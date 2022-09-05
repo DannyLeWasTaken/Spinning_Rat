@@ -10,8 +10,15 @@ link_directories(${CMAKE_SOURCE_DIR}/lib)
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-add_subdirectory(includes/glfw)
-add_subdirectory(includes/glm)
+FetchContent_Declare(glfw
+        GIT_REPOSITORY https://github.com/glfw/glfw
+        GIT_TAG 3.3.8)
+FetchContent_MakeAvailable(glfw)
+
+FetchContent_Declare(glm
+        GIT_REPOSITORY https://github.com/g-truc/glm
+        GIT_TAG 0.9.9.8)
+FetchContent_MakeAvailable(glm)
 
 set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(ASSIMP_INSTALL OFF CACHE BOOL "" FORCE)
@@ -20,6 +27,12 @@ FetchContent_Declare(assimp
         GIT_REPOSITORY https://github.com/assimp/assimp
         GIT_TAG v5.2.4)
 FetchContent_MakeAvailable(assimp)
+
+set(TINYGLTF_HEADER_ONLY ON CACHE INTERNAL "" FORCE)
+set(TINYGLTF_INSTALL OFF CACHE INTERNAL "" FORCE)
+FetchContent_Declare(tinygltf
+        GIT_REPOSITORY https://github.com/syoyo/tinygltf)
+FetchContent_MakeAvailable(tinygltf)
 
 add_executable(${PROJECT_NAME} src/main.cpp)
 
@@ -37,3 +50,4 @@ target_link_libraries(${PROJECT_NAME} PRIVATE glad)
 target_link_libraries(${PROJECT_NAME} PRIVATE glfw)
 target_link_libraries(${PROJECT_NAME} PRIVATE glm)
 target_link_libraries(${PROJECT_NAME} PRIVATE assimp)
+target_link_libraries(${PROJECT_NAME} PRIVATE tinygltf)

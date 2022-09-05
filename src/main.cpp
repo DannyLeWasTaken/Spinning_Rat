@@ -2,6 +2,7 @@
 #include <glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include "Model.hpp"
 
 int SCR_WIDTH = 800, SCR_HEIGHT = 600;
 double DeltaTime;
@@ -36,8 +37,6 @@ int main() {
     glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
 
-    unsigned int VAO, VBO;
-
     while (!glfwWindowShouldClose(window))
     {
         {
@@ -45,11 +44,13 @@ int main() {
             DeltaTime = time - LastFrameTime;
             LastFrameTime = time;
         }
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         processInput(window);
 
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glfwSwapBuffers(window);
+        glfwPollEvents();
     }
 
     return 0;
